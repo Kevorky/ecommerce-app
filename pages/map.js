@@ -38,7 +38,7 @@ function Map() {
       }
     };
     fetchGoogleApiKey();
-  }, [enqueueSnackbar, getUserCurrentLocation, userInfo]);
+  }, [enqueueSnackbar, userInfo]);
 
   const [center, setCenter] = useState(defaultLocation);
   const [location, setLocation] = useState(center);
