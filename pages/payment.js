@@ -1,10 +1,10 @@
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
-import { Store } from '../utils/Store';
-import Layout from '../components/Layout';
-import Form from '../components/Form';
-import CheckoutWizard from '../components/CheckoutWizard';
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from "react";
+import { Store } from "../utils/Store";
+import Layout from "../components/Layout";
+import Form from "../components/Form";
+import CheckoutWizard from "../components/CheckoutWizard";
 import {
   Button,
   FormControl,
@@ -14,33 +14,33 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from '@mui/material';
-import { useSnackbar } from 'notistack';
+} from "@mui/material";
+import { useSnackbar } from "notistack";
 
 export default function Payment() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState("");
   const { state, dispatch } = useContext(Store);
   const {
     cart: { shippingAddress },
   } = state;
   useEffect(() => {
     if (!shippingAddress.address) {
-      router.push('/shipping');
+      router.push("/shipping");
     } else {
-      setPaymentMethod(Cookies.get('paymentMethod') || '');
+      setPaymentMethod(Cookies.get("paymentMethod") || "");
     }
-  }, []);
+  }, [router, shippingAddress.address]);
   const submitHandler = (e) => {
     closeSnackbar();
     e.preventDefault();
     if (!paymentMethod) {
-      enqueueSnackbar('Payment method is required', { variant: 'error' });
+      enqueueSnackbar("Payment method is required", { variant: "error" });
     } else {
-      dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethod });
-      Cookies.set('paymentMethod', paymentMethod);
-      router.push('/placeorder');
+      dispatch({ type: "SAVE_PAYMENT_METHOD", payload: paymentMethod });
+      Cookies.set("paymentMethod", paymentMethod);
+      router.push("/placeorder");
     }
   };
   return (
@@ -88,7 +88,7 @@ export default function Payment() {
               type="button"
               variant="contained"
               color="secondary"
-              onClick={() => router.push('/shipping')}
+              onClick={() => router.push("/shipping")}
             >
               Back
             </Button>

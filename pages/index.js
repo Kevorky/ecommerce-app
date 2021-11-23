@@ -1,16 +1,17 @@
-import NextLink from 'next/link';
-import { Grid, Link, Typography } from '@mui/material';
-import Layout from '../components/Layout';
-import db from '../utils/db';
-import Product from '../models/Product';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import { Store } from '../utils/Store';
-import ProductItem from '../components/ProductItem';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import classes from '../utils/classes';
+import NextLink from "next/link";
+import { Grid, Link, Typography } from "@mui/material";
+import Layout from "../components/Layout";
+import db from "../utils/db";
+import Product from "../models/Product";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { Store } from "../utils/Store";
+import ProductItem from "../components/ProductItem";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import classes from "../utils/classes";
+import { Image } from "@mui/icons-material";
 
 export default function Home(props) {
   const router = useRouter();
@@ -21,11 +22,11 @@ export default function Home(props) {
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("Sorry. Product is out of stock");
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
-    router.push('/cart');
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
   return (
     <Layout>
@@ -37,7 +38,8 @@ export default function Home(props) {
             passHref
           >
             <Link sx={classes.flex}>
-              <img src={product.featuredImage} alt={product.name}></img>
+              {/*<img src={product.featuredImage} alt={product.name}></img>*/}
+              <Image src={product.featuredImage} alt={product.name}></Image>
             </Link>
           </NextLink>
         ))}
@@ -62,11 +64,11 @@ export async function getServerSideProps() {
   await db.connect();
   const featuredProductsDocs = await Product.find(
     { isFeatured: true },
-    '-reviews'
+    "-reviews"
   )
     .lean()
     .limit(3);
-  const topRatedProductsDocs = await Product.find({}, '-reviews')
+  const topRatedProductsDocs = await Product.find({}, "-reviews")
     .lean()
     .sort({
       rating: -1,

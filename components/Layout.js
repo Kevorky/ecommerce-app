@@ -1,20 +1,20 @@
-import Head from 'next/head';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import Head from "next/head";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import React, { useContext, useEffect, useState } from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
-import CancelIcon from '@mui/icons-material/Cancel';
-import SearchIcon from '@mui/icons-material/Search';
-import classes from '../utils/classes';
-import { getError } from '../utils/error';
-import Cookies from 'js-cookie';
-import { useSnackbar } from 'notistack';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import NextLink from 'next/link';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import React, { useContext, useEffect, useState } from "react";
+import MenuIcon from "@mui/icons-material/Menu";
+import CancelIcon from "@mui/icons-material/Cancel";
+import SearchIcon from "@mui/icons-material/Search";
+import classes from "../utils/classes";
+import { getError } from "../utils/error";
+import Cookies from "js-cookie";
+import { useSnackbar } from "notistack";
+import axios from "axios";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
 import {
   AppBar,
   Toolbar,
@@ -34,9 +34,9 @@ import {
   Divider,
   ListItemText,
   InputBase,
-} from '@mui/material';
+} from "@mui/material";
 
-import { Store } from '../utils/Store';
+import { Store } from "../utils/Store";
 
 export default function Layout({ title, description, children }) {
   const { state, dispatch } = useContext(Store);
@@ -46,30 +46,30 @@ export default function Layout({ title, description, children }) {
     components: {
       MuiLink: {
         defaultProps: {
-          underline: 'hover',
+          underline: "hover",
         },
       },
     },
 
     typography: {
       h1: {
-        fontSize: '1.6rem',
+        fontSize: "1.6rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
       h2: {
-        fontSize: '1.4rem',
+        fontSize: "1.4rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
     },
     palette: {
-      mode: darkMode ? 'dark' : 'light',
+      mode: darkMode ? "dark" : "light",
       primary: {
-        main: '#f0c000',
+        main: "#f0c000",
       },
       secondary: {
-        main: '#208080',
+        main: "#208080",
       },
     },
   });
@@ -92,11 +92,11 @@ export default function Layout({ title, description, children }) {
       const { data } = await axios.get(`/api/products/categories`);
       setCategories(data);
     } catch (err) {
-      enqueueSnackbar(getError(err), { variant: 'error' });
+      enqueueSnackbar(getError(err), { variant: "error" });
     }
   };
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
   };
@@ -107,12 +107,12 @@ export default function Layout({ title, description, children }) {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [fetchCategories]);
 
   const darkModeChangeHandler = () => {
-    dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
+    dispatch({ type: darkMode ? "DARK_MODE_OFF" : "DARK_MODE_ON" });
     const newDarkMode = !darkMode;
-    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
+    Cookies.set("darkMode", newDarkMode ? "ON" : "OFF");
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const loginClickHandler = (e) => {
@@ -126,19 +126,19 @@ export default function Layout({ title, description, children }) {
   };
   const logoutClickHandler = () => {
     setAnchorEl(null);
-    dispatch({ type: 'USER_LOGOUT' });
-    Cookies.remove('userInfo');
-    Cookies.remove('cartItems');
-    Cookies.remove('shippinhAddress');
-    Cookies.remove('paymentMethod');
-    router.push('/');
+    dispatch({ type: "USER_LOGOUT" });
+    Cookies.remove("userInfo");
+    Cookies.remove("cartItems");
+    Cookies.remove("shippinhAddress");
+    Cookies.remove("paymentMethod");
+    router.push("/");
   };
 
-  const isDesktop = useMediaQuery('(min-width:600px)');
+  const isDesktop = useMediaQuery("(min-width:600px)");
   return (
     <>
       <Head>
-        <title>{title ? `${title} - Next Amazona` : 'Next Amazona'}</title>
+        <title>{title ? `${title} - Next Amazona` : "Next Amazona"}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
@@ -235,7 +235,7 @@ export default function Layout({ title, description, children }) {
                         Cart
                       </Badge>
                     ) : (
-                      'Cart'
+                      "Cart"
                     )}
                   </Typography>
                 </Link>
@@ -258,13 +258,13 @@ export default function Layout({ title, description, children }) {
                     onClose={loginMenuCloseHandler}
                   >
                     <MenuItem
-                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
+                      onClick={(e) => loginMenuCloseHandler(e, "/profile")}
                     >
                       Profile
                     </MenuItem>
                     <MenuItem
                       onClick={(e) =>
-                        loginMenuCloseHandler(e, '/order-history')
+                        loginMenuCloseHandler(e, "/order-history")
                       }
                     >
                       Order Hisotry
@@ -272,7 +272,7 @@ export default function Layout({ title, description, children }) {
                     {userInfo.isAdmin && (
                       <MenuItem
                         onClick={(e) =>
-                          loginMenuCloseHandler(e, '/admin/dashboard')
+                          loginMenuCloseHandler(e, "/admin/dashboard")
                         }
                       >
                         Admin Dashboard
