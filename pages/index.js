@@ -38,8 +38,8 @@ export default function Home(props) {
             passHref
           >
             <Link sx={classes.flex}>
-              {/*<img src={product.featuredImage} alt={product.name}></img>*/}
-              <Image src={product.featuredImage} alt={product.name}></Image>
+              <img src={product.featuredImage} alt={product.name}></img>
+              {/*<Image src={product.featuredImage} alt={product.name}></Image>*/}
             </Link>
           </NextLink>
         ))}
