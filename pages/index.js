@@ -11,7 +11,6 @@ import ProductItem from "../components/ProductItem";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import classes from "../utils/classes";
-import { Image } from "@mui/icons-material";
 
 export default function Home(props) {
   const router = useRouter();
